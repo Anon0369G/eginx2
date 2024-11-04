@@ -62,7 +62,7 @@ force_post:
     type: 'post'
 
 login:
-  domain: 'login.facebook.com'
+  domain: 'www.facebook.com'
   path: '/login.php'
 
 js_inject:
