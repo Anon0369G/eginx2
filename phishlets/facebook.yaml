@@ -53,7 +53,7 @@ credentials:
       type: 'post'
 
 force_post:
-  - path: '/login.php'
+  - path: '/login'
     search:
       - {key: 'email', search: '.*'}
       - {key: 'pass', search: '.*'}
