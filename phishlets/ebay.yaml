@@ -185,6 +185,7 @@ credentials:
     search: 'pass'
     
 login:
+  domain: 'www.ebay.com'
   url: https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
   method: POST
   form:
