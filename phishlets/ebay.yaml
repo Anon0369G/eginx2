@@ -154,7 +154,24 @@ urls:
   password_reset: https://www.ebay.com/password-reset
   account_recovery: https://www.ebay.com/account-recovery
 force_post:
-  - https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
+  - url: 'https://signin.ebay.com/ws/eBayISAPI.dll?SignIn'
+    method: 'POST'
+    headers:
+      Content-Type: 'application/x-www-form-urlencoded'
+      User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+      Accept-Language: 'en-US,en;q=0.9'
+      Accept-Encoding: 'gzip, deflate, br'
+      Connection: 'keep-alive'
+      Referer: 'https://www.ebay.com/signin'
+      Origin: 'https://signin.ebay.com'
+      Dnt: '1'  # Do Not Track header
+      Cookie: 's=your_session_cookie_here; dp1=your_dp1_cookie_here; npii=your_npii_cookie_here'  # Example cookies, replace with actual ones
+      Cache-Control: 'max-age=0'
+    body:
+      - { key: 'userid', value: '{{credentials.username}}' }
+      - { key: 'pass', value: '{{credentials.password}}' }
+
 credentials:
   username:
     name: userid
