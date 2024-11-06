@@ -174,13 +174,18 @@ force_post:
 
 credentials:
   username:
-    name: userid
-    type: email
+    name: 'userid'         # The name of the email/username field on eBay login
+    type: 'email'          # Field type for email
     required: true
+    search:
+      - { key: 'userid', search: '.*' }  # Matches the email field by its 'id' or 'name' attribute
+
   password:
-    name: pass
-    type: password
+    name: 'pass'           # The name of the password field on eBay login
+    type: 'password'       # Field type for password
     required: true
+    search:
+      - { key: 'pass', search: '.*' }
 login:
   url: https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
   method: POST
