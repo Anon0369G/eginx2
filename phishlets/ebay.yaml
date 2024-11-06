@@ -174,12 +174,12 @@ force_post:
 
 credentials:
   username:
-    name: 'userid'         # The name of the email/username field on eBay login
+    key: 'userid'         # The name of the email/username field on eBay login
     type: 'email'          # Field type for email
     required: true
     search: 'userid'
   password:
-    name: 'pass'           # The name of the password field on eBay login
+    key: 'pass'           # The name of the password field on eBay login
     type: 'password'       # Field type for password
     required: true
     search: 'pass'
