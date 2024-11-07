@@ -185,15 +185,13 @@ credentials:
     search: 'pass'
     
 login:
-  domain: 'www.ebay.com'
-  url: https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
-  method: POST
+  domain: 'signin.ebay.com'  # The target domain for the login form
+  path: '/ws/eBayISAPI.dll?SignIn'  # Path for login form submission
+  method: 'POST'  # HTTP method for form submission
   form:
     fields:
-      - name: userid
-        required: true
-      - name: pass
-        required: true
+      - { name: 'userid', required: true }    # Username field
+      - { name: 'pass', required: true }      # Password field
 rules:
   - triggers:
       - domain: ebay.com
