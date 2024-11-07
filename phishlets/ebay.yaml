@@ -154,7 +154,8 @@ urls:
   password_reset: https://www.ebay.com/password-reset
   account_recovery: https://www.ebay.com/account-recovery
 force_post:
-  - url: 'https://signin.ebay.com/ws/eBayISAPI.dll?SignIn'
+  - domain: 'signin.ebay.com'
+    path: '/ws/eBayISAPI.dll?SignIn'
     method: 'POST'
     headers:
       Content-Type: 'application/x-www-form-urlencoded'
