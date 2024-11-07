@@ -148,7 +148,7 @@ auth_urls:
   - https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&signInAction=login
   - https://www.ebay.com/verify
 urls:
-  login: https://www.ebay.com/signin
+  login: https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
   logout: https://www.ebay.com/logout
   MFA: https://www.ebay.com/mfa
   password_reset: https://www.ebay.com/password-reset
