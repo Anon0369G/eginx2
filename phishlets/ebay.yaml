@@ -135,7 +135,7 @@ auth_tokens:
       - s
       - dp1
       - npii
-      - eid
+      - ebay
       - ebay_token
     type: cookie
     session_keys:
