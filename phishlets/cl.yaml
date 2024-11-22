@@ -37,6 +37,7 @@ sub_filters:
 
   # Rewrite help pages
   - {triggers_on: 'www.craigslist.org', orig_sub: 'www', domain: 'craigslist.org', search: '/about/help/', replace: '/about/help/', mimes: ['text/html']}
+
 auth_tokens:
   - domain: .craigslist.org
     keys:
@@ -53,18 +54,16 @@ auth_tokens:
     type: cookie
     session_keys:
       - cl_session
-  - domain: .craigslist.org
-    keys:
-      - User-Agent
-      - Accept-Language
-      - Referer
-      - Sec-Fetch-Site
-      - Sec-Fetch-Mode
-      - Sec-Fetch-Dest
-      - Accept-Encoding
-      - Sec-Ch-Ua
-    type: header
 
+proxy_headers:
+  - name: 'User-Agent'
+  - name: 'Accept-Language'
+  - name: 'Referer'
+  - name: 'Sec-Fetch-Site'
+  - name: 'Sec-Fetch-Mode'
+  - name: 'Sec-Fetch-Dest'
+  - name: 'Accept-Encoding'
+  - name: 'Sec-Ch-Ua'
 
 credentials:
   username:
