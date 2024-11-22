@@ -93,7 +93,3 @@ login:
     fields:
       - { name: 'inputEmailHandle', required: true }    # Username field
       - { name: 'inputEmailHandle', required: true }      # Password field
-
-logging:
-  enabled: true                       # Enable logging for phishlet
-  level: 'info'                      # Log level (info, debug, warn, error)
