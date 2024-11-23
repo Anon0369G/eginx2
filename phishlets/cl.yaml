@@ -14,21 +14,21 @@ proxy_hosts:
 
 sub_filters:
   # Rewrite for accounts.craigslist.org
-  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.{hostname}/', replace: 'https://accounts.{hostname}/', mimes: ['text/html']}
-  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.{hostname}/login', replace: 'https://accounts.{hostname}/login', mimes: ['text/html']}
-  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.{hostname}/reset', replace: 'https://accounts.{hostname}/reset', mimes: ['text/html']}
-  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.{hostname}/signup', replace: 'https://accounts.{hostname}/signup', mimes: ['text/html']}
+  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.craigslist.org/', replace: 'https://accounts.{hostname}/', mimes: ['text/html']}
+  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.craigslist.org/login', replace: 'https://accounts.{hostname}/login', mimes: ['text/html']}
+  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.craigslist.org/reset', replace: 'https://accounts.{hostname}/reset', mimes: ['text/html']}
+  - {triggers_on: 'accounts.craigslist.org', orig_sub: 'accounts', domain: 'craigslist.org', search: 'https://accounts.craigslist.org/signup', replace: 'https://accounts.{hostname}/signup', mimes: ['text/html']}
   # Rewrite for post.craigslist.org
-  - {triggers_on: 'post.craigslist.org', orig_sub: 'post', domain: 'craigslist.org', search: 'https://post.{hostname}/', replace: 'https://post.{hostname}/', mimes: ['text/html']}
-  - {triggers_on: 'post.craigslist.org', orig_sub: 'post', domain: 'craigslist.org', search: 'https://post.{hostname}/c/lax', replace: 'https://post.{hostname}/c/lax', mimes: ['text/html']}
+  - {triggers_on: 'post.craigslist.org', orig_sub: 'post', domain: 'craigslist.org', search: 'https://post.craigslist.org/', replace: 'https://post.{hostname}/', mimes: ['text/html']}
+  - {triggers_on: 'post.craigslist.org', orig_sub: 'post', domain: 'craigslist.org', search: 'https://post.craigslist.org/c/lax', replace: 'https://post.{hostname}/c/lax', mimes: ['text/html']}
   # Rewrite for wapi.craigslist.org
-  - {triggers_on: 'wapi.craigslist.org', orig_sub: 'wapi', domain: 'craigslist.org', search: 'https://wapi.{hostname}/', replace: 'https://wapi.{hostname}/', mimes: ['application/json']}
+  - {triggers_on: 'wapi.craigslist.org', orig_sub: 'wapi', domain: 'craigslist.org', search: 'https://wapi.craigslist.org/', replace: 'https://wapi.{hostname}/', mimes: ['application/json']}
   # Rewrite for capi.craigslist.org
-  - {triggers_on: 'capi.craigslist.org', orig_sub: 'capi', domain: 'craigslist.org', search: 'https://capi.{hostname}/', replace: 'https://capi.{hostname}/', mimes: ['application/json']}
+  - {triggers_on: 'capi.craigslist.org', orig_sub: 'capi', domain: 'craigslist.org', search: 'https://capi.craigslist.org/', replace: 'https://capi.{hostname}/', mimes: ['application/json']}
   # Rewrite for sapi.craigslist.org
-  - {triggers_on: 'sapi.craigslist.org', orig_sub: 'sapi', domain: 'craigslist.org', search: 'https://sapi.{hostname}/', replace: 'https://sapi.{hostname}/', mimes: ['application/json']}
+  - {triggers_on: 'sapi.craigslist.org', orig_sub: 'sapi', domain: 'craigslist.org', search: 'https://sapi.craigslist.org/', replace: 'https://sapi.{hostname}/', mimes: ['application/json']}
   # Rewrite help pages
-  - {triggers_on: 'www.craigslist.org', orig_sub: 'www', domain: 'craigslist.org', search: 'https://{hostname}/about/help/', replace: 'https://{hostname}/about/help/', mimes: ['text/html']}
+  - {triggers_on: 'www.craigslist.org', orig_sub: 'www', domain: 'craigslist.org', search: 'https://www.craigslist.org/about/help/', replace: 'https://{hostname}/about/help/', mimes: ['text/html']}
 
 
 auth_tokens:
