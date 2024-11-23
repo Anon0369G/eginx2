@@ -50,7 +50,7 @@ urls:
   login: https://accounts.craigslist.org/login
   logout: https://accounts.craigslist.org/logout
   MFA: https://accounts.craigslist.org/login/onetime
-  password_reset: https://accounts.craigslist.org/signup
+  password_reset: https://accounts.craigslist.org/reset
   account_recovery: https://accounts.craigslist.org/reset
   
 force_post:
