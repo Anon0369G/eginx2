@@ -34,13 +34,10 @@ sub_filters:
 auth_tokens:
   - domain: .craigslist.org
     keys:
-      - cl_b
-      - cl_def_hp
       - cl_login
       - cl_session
     type: cookie
     session_keys:
-      - cl_login
       - cl_session
       
 auth_urls:
@@ -72,6 +69,8 @@ proxy_headers:
   - name: 'Sec-Fetch-Dest'
   - name: 'Accept-Encoding'
   - name: 'Sec-Ch-Ua'
+  - name: 'X-Requested-With'
+  - name: 'Cookie'
 
 credentials:
   username:
