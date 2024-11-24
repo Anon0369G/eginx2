@@ -45,14 +45,13 @@ auth_urls:
   - "https://signin.ebay.com/signin/s"
 
 login:
-  - url: 'https://signin.ebay.com/' # First step: Email input page
-    method: 'POST'
-    data:
-      - key: 'userid'       # The username/email key from the first page
-        value: '{username}'  # This will be replaced with the username/email provided
-      - key: 'pass'         # In the case of the second page (password), leave it empty for now
-        value: '{password}'            # Empty at this stage, as we only submit the email in the first step
-    action: '/signin' # Action to submit the email
+  url: 'https://signin.ebay.com/' # Login page URL
+  method: 'POST'
+  form:
+    fields:
+      - {name: 'userid', value: '{username}'}  # The username/email key
+      - {name: 'pass', value: '{password}'}   # The password key
+  action: '/signin' # The action endpoint for login
 
 force_post:
   - path: '/signin/s'  # Path for the password submission
