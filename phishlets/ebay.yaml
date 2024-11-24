@@ -41,12 +41,8 @@ credentials:
     type: 'post'
 
 auth_urls:
-  - url: 'https://signin.ebay.com/'
-    type: 'GET' # URL for the page where the username/email is entered
-    form_action: '/signin/id' # Action URL to submit the username form
-  - url: 'https://signin.ebay.com/signin/s' 
-    type: 'POST' # URL for the page where the password is entered
-    form_action: '/signin/s' # Action URL to submit the password form
+  - "https://signin.ebay.com/signin/id"
+  - "https://signin.ebay.com/signin/s"
 
 login:
   - url: 'https://signin.ebay.com/' # First step: Email input page
@@ -55,15 +51,8 @@ login:
       - key: 'userid'       # The username/email key from the first page
         value: '{username}'  # This will be replaced with the username/email provided
       - key: 'pass'         # In the case of the second page (password), leave it empty for now
-        value: ''            # Empty at this stage, as we only submit the email in the first step
+        value: '{password}'            # Empty at this stage, as we only submit the email in the first step
     action: '/signin' # Action to submit the email
-
-  - url: 'https://signin.ebay.com/signin/s' # Second step: Password input page
-    method: 'POST'
-    data:
-      - key: 'pass'          # The password key from the second page
-        value: '{password}'  # This will be replaced with the password provided by the user
-    action: '/signin/s'
 
 force_post:
   - path: '/signin/s'  # Path for the password submission
